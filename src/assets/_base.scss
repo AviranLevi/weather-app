@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700&subset=latin-ext');
+
+$font-color: black;
+
+.app {
+  display: grid;
+  font-family: 'Quicksand', sans-serif;
+  height: 100vh;
+  width: 100vw;
+  color: $font-color;
+  font-weight: 500;
+  grid-template-rows: 15% 85%;
+}
+
+.dark-mode {
+  background: black;
+  input {
+    background: black;
+    color: white;
+  }
+  color: white;
+}
+
+.invert {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.center-items {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}

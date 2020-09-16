@@ -1,24 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentLocationWeather } from './stores/actions';
+import Main from './pages/main/Main';
+import Header from './components/header';
 
 function App() {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const { darkMode } = state;
+
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition(
+  //     (position) => {
+  //       const { coords } = position;
+  //       const { latitude, longitude } = coords;
+  //       dispatch(setCurrentLocationWeather(latitude, longitude));
+  //     },
+  //     (err) => console.log(err.message)
+  //   );
+  // }, [dispatch]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
+      <Header />
+      <Main />
     </div>
   );
 }
