@@ -9,7 +9,7 @@
     cursor: pointer;
     width: 70px;
     height: 35px;
-    background: grey;
+    background: #414345;
     display: block;
     border-radius: 100px;
     position: relative;
@@ -28,7 +28,7 @@
   }
 
   input:checked + label {
-    background: #bada55;
+    background: #0093e9;
   }
 
   input:checked + label:after {

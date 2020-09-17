@@ -1,22 +1,12 @@
 import * as actionType from '../actions/types';
 
 const initialState = {
-  cityName: 'Tel Aviv',
+  todayWeather: {},
+  dailyForecast: [],
   locationKey: '',
-  currentTemp: {
-    celsius: 34,
-    fahrenheit: 100,
-  },
-  weatherStatus: 'Sunny',
-  currentDate: '21 September 2020',
-  cityBackground: 'https://cache.marriott.com/marriottassets/marriott/TLVSI/tlvsi-exterior-4080-hor-feat.jpg',
-  favorites: [],
-  isDayTime: true,
-
-  searchValue: '',
   //features
   darkMode: false,
-  isLoading: false,
+  isLoading: true,
   convertTempUnits: false, //default = celsius
 };
 
@@ -32,10 +22,13 @@ const rootReducer = (state = initialState, action) => {
     case actionType.CURRENT_WEATHER:
       return {
         ...state,
-        currentDate: action.payload.currentDate,
-        currentTemp: action.payload.currentTemp,
-        weatherStatus: action.payload.weatherStatus,
-        isDayTime: action.payload.isDayTime,
+        todayWeather: action.payload,
+      };
+
+    case actionType.FIVE_DAYS_FORECASTS:
+      return {
+        ...state,
+        dailyForecast: action.payload,
       };
 
     case actionType.SEARCH_LOCATION:

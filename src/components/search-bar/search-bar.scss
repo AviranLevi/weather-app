@@ -6,13 +6,19 @@
     width: fit-content;
     justify-items: center;
     align-items: center;
-    border: 2px solid $font-color;
+    border: 1px solid $font-color;
     border-radius: 25px;
 
     input {
       font-size: 18px;
       outline: none;
       border: none;
+      color: $font-color;
+      background: none;
+
+      &::placeholder {
+        color: $font-color;
+      }
     }
 
     i {

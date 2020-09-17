@@ -1,4 +1,11 @@
 .main {
   height: 100%;
   width: 100%;
+
+  .daily-forecasts {
+    height: 90%;
+    width: 80%;
+    grid-gap: 20px;
+    grid-template-columns: repeat(5, 1fr);
+  }
 }

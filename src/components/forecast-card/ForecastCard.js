@@ -1,6 +1,5 @@
 import React from 'react';
 import Title from '../title';
-import WeatherIcons from '../../config/weatherIcons';
 import weatherIcons from '../../config/weatherIcons';
 
 const ForecastCard = ({
@@ -19,8 +18,8 @@ const ForecastCard = ({
         <Title className='date' text={date} />
       </div>
       <div className='status'>
-        <img className='status-icon' src={weatherIcons[icon]} alt={status} />
         <Title className='weather-status' text={status} />
+        <img className='status-icon' src={weatherIcons[icon]} alt={status} />
       </div>
     </div>
 

@@ -9,19 +9,19 @@ function App() {
   const state = useSelector((state) => state);
   const { darkMode } = state;
 
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition(
-  //     (position) => {
-  //       const { coords } = position;
-  //       const { latitude, longitude } = coords;
-  //       dispatch(setCurrentLocationWeather(latitude, longitude));
-  //     },
-  //     (err) => console.log(err.message)
-  //   );
-  // }, [dispatch]);
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { coords } = position;
+        const { latitude, longitude } = coords;
+        dispatch(setCurrentLocationWeather(latitude, longitude));
+      },
+      (err) => console.log(err.message)
+    );
+  }, []);
 
   return (
-    <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
+    <div className={`app fade-in ${darkMode ? 'dark-mode' : ''}`}>
       <Header />
       <Main />
     </div>

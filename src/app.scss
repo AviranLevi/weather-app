@@ -1,5 +1,6 @@
 @import './assets/reset';
 @import './assets/base';
+@import './assets/animations.scss';
 
 @import './pages/main/main';
 
@@ -7,3 +8,4 @@
 @import './components/forecast-card/forecast-card';
 @import './components/search-bar/search-bar';
 @import './components/toggle-switch/toggle-switch';
+@import './components/daily-forecast/daily-forecast.scss';

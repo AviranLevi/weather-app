@@ -1,0 +1,44 @@
+.daily-forecast-card {
+  height: 100%;
+
+  .daily-forecast-wrapper {
+    width: 100%;
+    height: 40%;
+    display: grid;
+  }
+
+  .date {
+    font-size: 22px;
+    font-weight: 600;
+  }
+
+  .daily-status {
+    width: fit-content;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    .daily-status-text {
+      font-size: 20px;
+    }
+  }
+
+  .day-temp {
+    display: grid;
+    width: fit-content;
+    align-items: end;
+    grid-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+
+    .max-temp {
+      width: fit-content;
+      display: flex;
+      font-size: 30px;
+    }
+    .min-temp {
+      width: fit-content;
+      display: flex;
+      font-size: 20px;
+    }
+  }
+}
