@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentLocationWeather } from './stores/actions';
 import Main from './pages/main/Main';
 import Header from './components/header';
+import { getFavorites } from './stores/actions/weather';
 
 function App() {
   const dispatch = useDispatch();
@@ -18,7 +19,9 @@ function App() {
       },
       (err) => console.log(err.message)
     );
-  }, []);
+
+    dispatch(getFavorites());
+  }, [dispatch]);
 
   return (
     <div className={`app fade-in ${darkMode ? 'dark-mode' : ''}`}>

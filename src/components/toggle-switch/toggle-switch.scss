@@ -28,7 +28,7 @@
   }
 
   input:checked + label {
-    background: #0093e9;
+    background: $primary;
   }
 
   input:checked + label:after {

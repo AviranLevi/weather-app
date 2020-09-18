@@ -4,6 +4,9 @@ const initialState = {
   todayWeather: {},
   dailyForecast: [],
   locationKey: '',
+  cityName: '',
+  favorite: false,
+  favoriteCities: [],
   //features
   darkMode: false,
   isLoading: true,
@@ -37,14 +40,54 @@ const rootReducer = (state = initialState, action) => {
         searchValue: action.payload,
       };
 
+    case actionType.ADD_TO_FAVORITE:
+      return {
+        ...state,
+        favoriteCities: state.favoriteCities.concat(action.payload),
+      };
+
+    case actionType.GET_FAVORITES:
+      return {
+        ...state,
+        favoriteCities: action.payload,
+      };
+
+    case actionType.REMOVE_FROM_FAVORITE:
+      return {
+        ...state,
+        favoriteCities: action.payload,
+        favorite: false,
+      };
+
+    case actionType.FAVORITE_CITY:
+      return {
+        ...state,
+        favorite: action.payload,
+      };
+
+    case actionType.REMOVE_FROM_FAVORITE:
+      return {
+        ...state,
+        favoriteCities: state.favoriteCities.filter((city) => city !== action.payload),
+      };
+
     case actionType.DARK_MODE:
-      return { ...state, darkMode: action.payload };
+      return {
+        ...state,
+        darkMode: action.payload,
+      };
 
     case actionType.IS_LOADING:
-      return { ...state, isLoading: action.payload };
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
 
     case actionType.CONVERT_TEMP_UNITS:
-      return { ...state, convertTempUnits: action.payload };
+      return {
+        ...state,
+        convertTempUnits: action.payload,
+      };
 
     default:
       return state;

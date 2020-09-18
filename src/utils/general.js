@@ -5,3 +5,5 @@ export const converter = (min, max) => {
     return `${((min * 9) / 5 + 32).toFixed(2)}\xB0F - ${((max * 9) / 5 + 32).toFixed(2)}\xB0F `;
   }
 };
+
+export const getLocalStorage = () => JSON.parse(localStorage.getItem('favorites')) || [];

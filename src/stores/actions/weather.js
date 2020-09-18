@@ -1,7 +1,9 @@
-import * as actionType from './types';
 import axios from 'axios';
-import { accuWeather } from '../../config';
 import moment from 'moment';
+import * as actionType from './types';
+import { accuWeather } from '../../config';
+import { isLoading } from './features';
+import { getLocalStorage } from '../../utils/general';
 
 const { apikey } = accuWeather;
 
@@ -13,11 +15,9 @@ export const searchCity = (value) => (dispatch) => {
   dispatch({ type: actionType.SEARCH_LOCATION, payload: value });
 };
 
-export const enableDarkMode = (bool) => ({ type: actionType.DARK_MODE, payload: bool });
-
 export const setCurrentLocationWeather = (lat, lon) => (dispatch) => {
   const params = { q: `${lat},${lon}`, apikey };
-
+  const savedCities = getLocalStorage();
   api
     .get('/locations/v1/geoposition/search', { params })
     .then((res) => {
@@ -25,6 +25,11 @@ export const setCurrentLocationWeather = (lat, lon) => (dispatch) => {
       const { Key, EnglishName } = data[0];
       dispatch({ type: actionType.SET_LOCATION, payload: { key: Key, cityName: EnglishName } });
       dispatch(getTodayWeather(Key));
+
+      const alreadyInFavorite = savedCities.filter((city) => city.locationKey === Key);
+      if (alreadyInFavorite.length) {
+        dispatch({ type: actionType.FAVORITE_CITY, payload: true });
+      }
     })
     .catch((err) => console.log(err));
 };
@@ -61,4 +66,25 @@ export const getDailyForecasts = (key) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const isLoading = (bool) => ({ type: actionType.IS_LOADING, payload: bool });
+export const addToFavorite = (cityName, locationKey) => (dispatch) => {
+  const savedCities = getLocalStorage();
+
+  const updatedCities = [...savedCities, { cityName, locationKey, favorite: true }];
+
+  localStorage.setItem('favorites', JSON.stringify(updatedCities));
+
+  dispatch({ type: actionType.FAVORITE_CITY, payload: true });
+  dispatch({ type: actionType.ADD_TO_FAVORITE, payload: updatedCities });
+};
+
+export const getFavorites = () => (dispatch) => {
+  const favorites = getLocalStorage();
+  dispatch({ type: actionType.GET_FAVORITES, payload: favorites });
+};
+
+export const removeFromFavorites = (locationKey) => (dispatch) => {
+  const savedCities = getLocalStorage();
+  const updatedCities = savedCities.filter((city) => city.locationKey !== locationKey);
+  localStorage.setItem('favorites', JSON.stringify(updatedCities));
+  dispatch({ type: actionType.REMOVE_FROM_FAVORITE, payload: updatedCities });
+};

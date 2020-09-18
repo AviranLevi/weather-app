@@ -11,6 +11,20 @@
       display: grid;
       grid-gap: 10px;
       margin-bottom: 50px;
+      position: relative;
+
+      .favorite-icon {
+        font-size: 35px;
+        cursor: pointer;
+        position: absolute;
+        top: 10px;
+        right: 120px;
+      }
+
+      .fav-clicked {
+        color: red;
+      }
+
       .city-name {
         font-weight: 600;
         font-size: 100px;
