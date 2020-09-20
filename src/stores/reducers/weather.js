@@ -7,6 +7,9 @@ const initialState = {
   cityName: '',
   favorite: false,
   favoriteCities: [],
+  //search
+  searchValue: '',
+  searchResults: [],
   //features
   darkMode: false,
   isLoading: true,
@@ -25,7 +28,8 @@ const rootReducer = (state = initialState, action) => {
     case actionType.CURRENT_WEATHER:
       return {
         ...state,
-        todayWeather: action.payload,
+        todayWeather: action.payload.todayWeather,
+        cityName: action.payload.cityName,
       };
 
     case actionType.FIVE_DAYS_FORECASTS:
@@ -38,6 +42,12 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         searchValue: action.payload,
+      };
+
+    case actionType.SEARCH_RESULTS:
+      return {
+        ...state,
+        searchResults: action.payload,
       };
 
     case actionType.ADD_TO_FAVORITE:

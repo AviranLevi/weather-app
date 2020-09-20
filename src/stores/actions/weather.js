@@ -11,10 +11,6 @@ const api = axios.create({
   baseURL: accuWeather.url,
 });
 
-export const searchCity = (value) => (dispatch) => {
-  dispatch({ type: actionType.SEARCH_LOCATION, payload: value });
-};
-
 export const setCurrentLocationWeather = (lat, lon) => (dispatch) => {
   const params = { q: `${lat},${lon}`, apikey };
   const savedCities = getLocalStorage();
@@ -24,7 +20,7 @@ export const setCurrentLocationWeather = (lat, lon) => (dispatch) => {
       const { data } = res;
       const { Key, EnglishName } = data[0];
       dispatch({ type: actionType.SET_LOCATION, payload: { key: Key, cityName: EnglishName } });
-      dispatch(getTodayWeather(Key));
+      dispatch(getTodayWeather(Key, EnglishName));
 
       const alreadyInFavorite = savedCities.filter((city) => city.locationKey === Key);
       if (alreadyInFavorite.length) {
@@ -34,8 +30,10 @@ export const setCurrentLocationWeather = (lat, lon) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const getTodayWeather = (key) => (dispatch) => {
-  const params = { apikey, getphotos: true };
+export const getTodayWeather = (key, cityName) => (dispatch) => {
+  dispatch(isLoading(true));
+
+  const params = { apikey };
   api
     .get(`/currentconditions/v1/${key}`, { params })
     .then((res) => {
@@ -43,10 +41,9 @@ export const getTodayWeather = (key) => (dispatch) => {
       const { LocalObservationDateTime } = data[0];
       const currentDate = moment(LocalObservationDateTime).format('LL');
       const todayWeather = { ...data[0], currentDate };
-
       dispatch({
         type: actionType.CURRENT_WEATHER,
-        payload: todayWeather,
+        payload: { todayWeather, cityName },
       });
       dispatch(getDailyForecasts(key));
       dispatch(isLoading(false));
@@ -68,7 +65,6 @@ export const getDailyForecasts = (key) => (dispatch) => {
 
 export const addToFavorite = (cityName, locationKey) => (dispatch) => {
   const savedCities = getLocalStorage();
-
   const updatedCities = [...savedCities, { cityName, locationKey, favorite: true }];
 
   localStorage.setItem('favorites', JSON.stringify(updatedCities));
@@ -85,6 +81,7 @@ export const getFavorites = () => (dispatch) => {
 export const removeFromFavorites = (locationKey) => (dispatch) => {
   const savedCities = getLocalStorage();
   const updatedCities = savedCities.filter((city) => city.locationKey !== locationKey);
+
   localStorage.setItem('favorites', JSON.stringify(updatedCities));
   dispatch({ type: actionType.REMOVE_FROM_FAVORITE, payload: updatedCities });
 };
