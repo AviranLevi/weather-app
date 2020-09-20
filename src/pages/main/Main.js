@@ -1,12 +1,28 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import ForecastCard from '../../components/forecast-card';
 import DailyForecast from '../../components/daily-forecast';
 import Loading from '../../components/loading';
+import { getFavorites, setCurrentLocationWeather } from '../../stores/actions';
 
 const Main = () => {
+  const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const { todayWeather, isLoading, dailyForecast } = state;
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { coords } = position;
+        const { latitude, longitude } = coords;
+        dispatch(setCurrentLocationWeather(latitude, longitude));
+      },
+      (err) => console.log(err.message)
+    );
+
+    dispatch(getFavorites());
+  }, [dispatch]);
+
   if (isLoading) return <Loading open={isLoading} />;
 
   return (
