@@ -1,8 +1,9 @@
 import axios from 'axios';
 import moment from 'moment';
+import { v4 as uuid } from 'uuid';
 import * as actionType from './types';
 import { accuWeather } from '../../config';
-import { isLoading } from './features';
+import { toggleLoading } from './features';
 import { getLocalStorage } from '../../utils/general';
 
 const { apikey } = accuWeather;
@@ -12,6 +13,7 @@ const api = axios.create({
 });
 
 export const setCurrentLocationWeather = (lat, lon) => (dispatch) => {
+  dispatch(toggleLoading(true));
   const params = { q: `${lat},${lon}`, apikey };
   const savedCities = getLocalStorage();
   api
@@ -31,8 +33,7 @@ export const setCurrentLocationWeather = (lat, lon) => (dispatch) => {
 };
 
 export const getTodayWeather = (key, cityName) => (dispatch) => {
-  dispatch(isLoading(true));
-
+  dispatch(toggleLoading(true));
   const params = { apikey };
   api
     .get(`/currentconditions/v1/${key}`, { params })
@@ -46,7 +47,7 @@ export const getTodayWeather = (key, cityName) => (dispatch) => {
         payload: { todayWeather, cityName },
       });
       dispatch(getDailyForecasts(key));
-      dispatch(isLoading(false));
+      dispatch(toggleLoading(false));
     })
     .catch((err) => console.log(err));
 };
@@ -65,7 +66,7 @@ export const getDailyForecasts = (key) => (dispatch) => {
 
 export const addToFavorite = (cityName, locationKey) => (dispatch) => {
   const savedCities = getLocalStorage();
-  const updatedCities = [...savedCities, { cityName, locationKey, favorite: true }];
+  const updatedCities = [...savedCities, { cityName, locationKey, id: uuid() }];
 
   localStorage.setItem('favorites', JSON.stringify(updatedCities));
 

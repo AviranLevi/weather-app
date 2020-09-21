@@ -3,10 +3,11 @@
 @import './assets/animations.scss';
 
 @import './pages/main/main';
+@import './pages/favorites/favorites';
 
 @import './components/header/header';
 @import './components/forecast-card/forecast-card';
 @import './components/toggle-switch/toggle-switch';
 @import './components/daily-forecast/daily-forecast.scss';
-@import './components/menu/menu.scss';
 @import './components/search-input/search-input';
+@import './components/favorite-card/favorite-card.scss';

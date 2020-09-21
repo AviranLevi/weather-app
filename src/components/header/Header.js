@@ -3,20 +3,21 @@ import SearchInput from '../search-input';
 import ToggleSwitch from '../toggle-switch';
 import Title from '../title';
 import { useSelector, useDispatch } from 'react-redux';
-import { searchCity, enableDarkMode } from '../../stores/actions';
-import Menu from '../menu';
+import { enableDarkMode } from '../../stores/actions';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const state = useSelector((state) => state);
-  const { searchValue, darkMode, favoriteCities } = state;
+  const { searchResults, darkMode } = state;
   const dispatch = useDispatch();
   return (
     <div className='header center-items'>
       <div className='routes center-items'>
-        <Menu items={['Favorites:']} favorites={favoriteCities} />
+        <Link to='/'>Home</Link>
+        <Link to='/my-besties'>Favorites</Link>
       </div>
 
-      <SearchInput value={searchValue} onChange={(e) => dispatch(searchCity(e.target.value))} />
+      <SearchInput searchResults={searchResults} />
 
       <div className='dark-mode-switch center-items'>
         <Title text='Dark Theme' />

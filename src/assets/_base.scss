@@ -5,6 +5,11 @@ $font-color: white;
 $favorite-color: red;
 $dark-mode-color: #232526;
 
+a {
+  text-decoration: none;
+  color: $font-color;
+}
+
 .app {
   background-image: linear-gradient(160deg, $primary 0%, #80d0c7 100%);
 

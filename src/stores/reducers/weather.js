@@ -12,8 +12,14 @@ const initialState = {
   searchResults: [],
   //features
   darkMode: false,
-  isLoading: true,
+  loading: true,
   convertTempUnits: false, //default = celsius
+  //errors
+  errors: {
+    apiError: false,
+    searchError: false,
+    dailyForecastError: false,
+  },
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -75,12 +81,6 @@ const rootReducer = (state = initialState, action) => {
         favorite: action.payload,
       };
 
-    case actionType.REMOVE_FROM_FAVORITE:
-      return {
-        ...state,
-        favoriteCities: state.favoriteCities.filter((city) => city !== action.payload),
-      };
-
     case actionType.DARK_MODE:
       return {
         ...state,
@@ -90,7 +90,7 @@ const rootReducer = (state = initialState, action) => {
     case actionType.IS_LOADING:
       return {
         ...state,
-        isLoading: action.payload,
+        loading: action.payload,
       };
 
     case actionType.CONVERT_TEMP_UNITS:

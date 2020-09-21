@@ -3,27 +3,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import ForecastCard from '../../components/forecast-card';
 import DailyForecast from '../../components/daily-forecast';
 import Loading from '../../components/loading';
-import { getFavorites, setCurrentLocationWeather } from '../../stores/actions';
+import { getFavorites, getTodayWeather, setCurrentLocationWeather } from '../../stores/actions';
 
-const Main = () => {
+const Main = ({ match }) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
-  const { todayWeather, isLoading, dailyForecast } = state;
+  const { todayWeather, loading, dailyForecast, favoriteCities } = state;
+  const { id } = match.params;
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { coords } = position;
-        const { latitude, longitude } = coords;
-        dispatch(setCurrentLocationWeather(latitude, longitude));
-      },
-      (err) => console.log(err.message)
-    );
-
     dispatch(getFavorites());
-  }, [dispatch]);
+    if (id) {
+      const city = favoriteCities.filter((city) => city.id === id);
+      dispatch(getTodayWeather(city.locationKey, city.cityName));
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { coords } = position;
+          const { latitude, longitude } = coords;
+          dispatch(setCurrentLocationWeather(latitude, longitude));
+        },
+        (err) => console.log(err.message)
+      );
+    }
+  }, [id, favoriteCities, dispatch]);
 
-  if (isLoading) return <Loading open={isLoading} />;
+  if (loading) return <Loading open={loading} />;
 
   return (
     <div className='main center-items'>

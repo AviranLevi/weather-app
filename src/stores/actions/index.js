@@ -1,3 +1,3 @@
 export { setCurrentLocationWeather, addToFavorite, getFavorites, getTodayWeather } from './weather';
 
-export { searchCity, enableDarkMode, isLoading } from './features';
+export { searchCity, enableDarkMode, toggleLoading } from './features';

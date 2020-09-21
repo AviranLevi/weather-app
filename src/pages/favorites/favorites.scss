@@ -1,0 +1,18 @@
+.favorites {
+  width: 100%;
+  height: 100%;
+
+  .favorites-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    grid-gap: 50px;
+    width: 80%;
+    height: 90%;
+  }
+
+  .no-favorites-title {
+    font-size: 50px;
+    justify-self: center;
+    margin-top: 50px;
+  }
+}

@@ -1,0 +1,24 @@
+.favorite-card {
+  border-radius: 25px;
+  height: 300px;
+  width: 200px;
+  padding: 20px;
+  cursor: pointer;
+
+  &:hover {
+    transition: 0.5s !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  }
+
+  .favorite-card-title {
+    font-size: 40px;
+  }
+
+  .favorites-current-temp {
+    font-size: 30px;
+  }
+
+  .favorites-weather-status {
+    font-size: 20px;
+  }
+}

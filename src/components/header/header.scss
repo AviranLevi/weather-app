@@ -7,6 +7,14 @@
   .routes {
     width: 100%;
     grid-template-columns: repeat(2, 1fr);
+
+    a {
+      opacity: 1;
+      transition: 0.5s;
+      &:hover {
+        opacity: 0.5;
+      }
+    }
   }
 
   .dark-mode-switch {

@@ -14,8 +14,8 @@ function App() {
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
       <Header />
       <Switch>
-        <Route path='/:id' component={Main} />
         <Route exact path='/my-besties' component={Favorites} />
+        <Route path='/:id?' render={({ match }) => <Main match={match} />} />
       </Switch>
     </div>
   );
