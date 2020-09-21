@@ -13,7 +13,6 @@ const api = axios.create({
 });
 
 export const setCurrentLocationWeather = (lat, lon) => (dispatch) => {
-  dispatch(toggleLoading(true));
   const params = { q: `${lat},${lon}`, apikey };
   const savedCities = getLocalStorage();
   api
@@ -35,6 +34,7 @@ export const setCurrentLocationWeather = (lat, lon) => (dispatch) => {
 export const getTodayWeather = (key, cityName) => (dispatch) => {
   dispatch(toggleLoading(true));
   const params = { apikey };
+
   api
     .get(`/currentconditions/v1/${key}`, { params })
     .then((res) => {
@@ -42,10 +42,12 @@ export const getTodayWeather = (key, cityName) => (dispatch) => {
       const { LocalObservationDateTime } = data[0];
       const currentDate = moment(LocalObservationDateTime).format('LL');
       const todayWeather = { ...data[0], currentDate };
+
       dispatch({
         type: actionType.CURRENT_WEATHER,
         payload: { todayWeather, cityName },
       });
+
       dispatch(getDailyForecasts(key));
       dispatch(toggleLoading(false));
     })
@@ -66,8 +68,7 @@ export const getDailyForecasts = (key) => (dispatch) => {
 
 export const addToFavorite = (cityName, locationKey) => (dispatch) => {
   const savedCities = getLocalStorage();
-  const updatedCities = [...savedCities, { cityName, locationKey, id: uuid() }];
-
+  const updatedCities = [...savedCities, { cityName, locationKey, id: uuid(), favorite: true }];
   localStorage.setItem('favorites', JSON.stringify(updatedCities));
 
   dispatch({ type: actionType.FAVORITE_CITY, payload: true });

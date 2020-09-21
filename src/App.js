@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -14,8 +14,12 @@ function App() {
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
       <Header />
       <Switch>
-        <Route exact path='/my-besties' component={Favorites} />
-        <Route path='/:id?' render={({ match }) => <Main match={match} />} />
+        <Route exact path='/my-besties'>
+          <Favorites />
+        </Route>
+        <Route path='/:id?'>
+          <Main />
+        </Route>
       </Switch>
     </div>
   );

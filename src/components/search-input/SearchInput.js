@@ -26,6 +26,7 @@ const SearchInput = ({ className = '', style = {}, searchResults = [] }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [value, setValue] = useState('');
+
   const renderResults = (
     <List className={classes.list}>
       {searchResults.map((city) => (
@@ -39,7 +40,7 @@ const SearchInput = ({ className = '', style = {}, searchResults = [] }) => {
   const handleOnChange = (e) => {
     let value = e.target.value;
     setValue(value);
-    dispatch(searchCity(value));
+    if (value) dispatch(searchCity(value));
   };
 
   return (

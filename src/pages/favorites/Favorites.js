@@ -1,29 +1,25 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import FavoriteCard from '../../components/favorite-card/FavoriteCard';
-import Loading from '../../components/loading';
 import Title from '../../components/title';
-import { getFavorites, toggleLoading } from '../../stores/actions';
+import { getLocalStorage } from '../../utils/general';
 
 const Favorites = () => {
-  const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-  const { isLoading, favoriteCities } = state;
+  const [favoriteCities, setFavoriteCities] = useState([]);
 
   useEffect(() => {
-    dispatch(getFavorites());
-    if (favoriteCities.length) {
-      dispatch(toggleLoading(false));
-    }
-  }, [dispatch]);
-
-  if (isLoading) return <Loading open={isLoading} />;
+    setFavoriteCities(getLocalStorage());
+  }, [favoriteCities.length]);
 
   return (
     <div className='favorites center-items fade-in'>
       <div className='favorites-wrapper'>
         {favoriteCities.length ? (
-          favoriteCities.map((city, index) => <FavoriteCard title={city.cityName} index={index} />)
+          favoriteCities.map((city, index) => (
+            <Link to={`/${city.id}`}>
+              <FavoriteCard title={city.cityName} locationKey={city.locationKey} index={index} key={city.id} />
+            </Link>
+          ))
         ) : (
           <Title className='no-favorites-title' text={`You didn't save any city yet... :(`} />
         )}

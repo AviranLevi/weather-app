@@ -7,3 +7,10 @@ export const converter = (min, max) => {
 };
 
 export const getLocalStorage = () => JSON.parse(localStorage.getItem('favorites')) || [];
+
+export const isEmpty = (obj) => {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) return false;
+  }
+  return true;
+};

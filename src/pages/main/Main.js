@@ -1,32 +1,36 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ForecastCard from '../../components/forecast-card';
 import DailyForecast from '../../components/daily-forecast';
 import Loading from '../../components/loading';
-import { getFavorites, getTodayWeather, setCurrentLocationWeather } from '../../stores/actions';
+import { getTodayWeather, setCurrentLocationWeather } from '../../stores/actions';
+import { useLocation, useParams } from 'react-router-dom';
+import { getLocalStorage } from '../../utils/general';
 
-const Main = ({ match }) => {
+const Main = () => {
   const dispatch = useDispatch();
+  const { id } = useParams();
   const state = useSelector((state) => state);
-  const { todayWeather, loading, dailyForecast, favoriteCities } = state;
-  const { id } = match.params;
+  const [favoriteCities, setFavoriteCities] = useState([]);
+  const { todayWeather, loading, dailyForecast } = state;
 
   useEffect(() => {
-    dispatch(getFavorites());
+    setFavoriteCities(getLocalStorage());
+
     if (id) {
       const city = favoriteCities.filter((city) => city.id === id);
       dispatch(getTodayWeather(city.locationKey, city.cityName));
     } else {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          const { coords } = position;
-          const { latitude, longitude } = coords;
+          const { latitude, longitude } = position.coords;
           dispatch(setCurrentLocationWeather(latitude, longitude));
         },
-        (err) => console.log(err.message)
+        (err) => console.log(err),
+        { timeout: 5000, enableHighAccuracy: true }
       );
     }
-  }, [id, favoriteCities, dispatch]);
+  }, [favoriteCities.length]);
 
   if (loading) return <Loading open={loading} />;
 

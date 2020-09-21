@@ -6,7 +6,6 @@ const initialState = {
   locationKey: '',
   cityName: '',
   favorite: false,
-  favoriteCities: [],
   //search
   searchValue: '',
   searchResults: [],
@@ -59,7 +58,7 @@ const rootReducer = (state = initialState, action) => {
     case actionType.ADD_TO_FAVORITE:
       return {
         ...state,
-        favoriteCities: state.favoriteCities.concat(action.payload),
+        favoriteCities: action.payload,
       };
 
     case actionType.GET_FAVORITES:
