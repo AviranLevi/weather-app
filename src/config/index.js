@@ -1,4 +1,4 @@
 export const accuWeather = {
-  apikey: '2h3NUaWLQowK2i3BSp2ZgHMy1ZcekbyM',
+  apikey: 'jNJ7UNzOYSnOWrMMrW3cLIJ9Y92Ouotz',
   url: 'https://dataservice.accuweather.com',
 };
