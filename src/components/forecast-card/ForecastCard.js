@@ -23,15 +23,18 @@ const ForecastCard = ({
     <div className='forecast-card center-items from-bottom'>
       <div className='city-info'>
         <div className='city-name-date'>
-          <div
-            className={`favorite-icon ${favorite ? 'fav-clicked' : ''}`}
-            onClick={() =>
-              !favorite ? dispatch(addToFavorite(cityName, locationKey)) : dispatch(removeFromFavorites(locationKey))
-            }
-          >
-            {favorite ? featureIcons.favoriteClicked : featureIcons.favoriteUnClicked}
+          <div className='city-name-fav-btn'>
+            <Title className='city-name' text={cityName} />
+
+            <div
+              className={`favorite-icon ${favorite ? 'fav-clicked' : ''}`}
+              onClick={() =>
+                !favorite ? dispatch(addToFavorite(cityName, locationKey)) : dispatch(removeFromFavorites(locationKey))
+              }
+            >
+              {favorite ? featureIcons.favoriteClicked : featureIcons.favoriteUnClicked}
+            </div>
           </div>
-          <Title className='city-name' text={cityName} />
           <Title className='date' text={date} />
         </div>
         <div className='status'>
@@ -50,7 +53,6 @@ const ForecastCard = ({
           <span>&#8451;</span>
         </div>
       )}
-      <div></div>
     </div>
   );
 };

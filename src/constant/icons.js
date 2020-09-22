@@ -6,4 +6,5 @@ export const featureIcons = {
   favoriteUnClicked: <i className='far fa-heart'></i>,
   moon: <i className='fas fa-moon'></i>,
   burger: <i className='fas fa-bars'></i>,
+  close: <i className='fas fa-times'></i>,
 };

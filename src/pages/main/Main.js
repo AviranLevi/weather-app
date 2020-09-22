@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import ForecastCard from '../../components/forecast-card';
 import DailyForecast from '../../components/daily-forecast';
 import Loading from '../../components/loading';
-import { getTodayWeather, setCurrentLocationWeather } from '../../stores/actions';
-import { useLocation, useParams } from 'react-router-dom';
+import { favoriteCityNotFound, getTodayWeather, setCurrentLocationWeather } from '../../stores/actions';
+import { Redirect, useParams } from 'react-router-dom';
 import { getLocalStorage } from '../../utils/general';
 
 const Main = () => {
@@ -12,14 +12,23 @@ const Main = () => {
   const { id } = useParams();
   const state = useSelector((state) => state);
   const [favoriteCities, setFavoriteCities] = useState([]);
-  const { todayWeather, loading, dailyForecast } = state;
+  const { todayWeather, loading, dailyForecast, errors } = state;
 
   useEffect(() => {
     setFavoriteCities(getLocalStorage());
 
     if (id) {
-      const city = favoriteCities.filter((city) => city.id === id);
-      dispatch(getTodayWeather(city.locationKey, city.cityName));
+      Promise.all(favoriteCities.filter((city) => city.id === id))
+        .then((res) => {
+          if (res.length) {
+            const { locationKey, cityName, favorite } = res[0];
+            dispatch(getTodayWeather(locationKey, cityName, favorite));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch(favoriteCityNotFound(true));
+        });
     } else {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -31,6 +40,8 @@ const Main = () => {
       );
     }
   }, [favoriteCities.length]);
+
+  if (errors.idNotFound) return <Redirect exact to='/my-besties' />;
 
   if (loading) return <Loading open={loading} />;
 
@@ -51,7 +62,7 @@ const Main = () => {
 
       <div className='daily-forecasts center-items'>
         {dailyForecast.map((forecast, index) => (
-          <DailyForecast forecast={forecast} index={index} />
+          <DailyForecast forecast={forecast} index={index} convertTempUnits={state.convertTempUnits} />
         ))}
       </div>
     </div>

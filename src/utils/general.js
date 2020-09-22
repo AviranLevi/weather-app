@@ -1,8 +1,8 @@
 export const converter = (min, max) => {
   if (max === undefined) {
-    return `${((min * 9) / 5 + 32).toFixed(2)}\xB0F`;
+    return `${((min * 9) / 5 + 32).toFixed(1)}`;
   } else {
-    return `${((min * 9) / 5 + 32).toFixed(2)}\xB0F - ${((max * 9) / 5 + 32).toFixed(2)}\xB0F `;
+    return `${((min * 9) / 5 + 32).toFixed(1)} - ${((max * 9) / 5 + 32).toFixed(1)} `;
   }
 };
 

@@ -13,11 +13,14 @@ const initialState = {
   darkMode: false,
   loading: true,
   convertTempUnits: false, //default = celsius
+  redirect: false,
+  slideMenu: false,
   //errors
   errors: {
     apiError: false,
     searchError: false,
     dailyForecastError: false,
+    idNotFound: false,
   },
 };
 
@@ -28,6 +31,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         cityName: action.payload.cityName,
         locationKey: action.payload.key,
+        favorite: action.payload.favorite,
       };
 
     case actionType.CURRENT_WEATHER:
@@ -35,6 +39,8 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         todayWeather: action.payload.todayWeather,
         cityName: action.payload.cityName,
+        favorite: action.payload.favorite,
+        locationKey: action.payload.key,
       };
 
     case actionType.FIVE_DAYS_FORECASTS:
@@ -56,12 +62,6 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case actionType.ADD_TO_FAVORITE:
-      return {
-        ...state,
-        favoriteCities: action.payload,
-      };
-
-    case actionType.GET_FAVORITES:
       return {
         ...state,
         favoriteCities: action.payload,
@@ -96,6 +96,27 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         convertTempUnits: action.payload,
+      };
+
+    case actionType.REDIRECT:
+      return {
+        ...state,
+        redirect: action.payload,
+      };
+
+    case actionType.SLIDE_MENU:
+      return {
+        ...state,
+        slideMenu: action.payload,
+      };
+
+    case actionType.ID_NOT_FOUND:
+      return {
+        ...state,
+        errors: {
+          ...state.errors,
+          idNotFound: action.payload,
+        },
       };
 
     default:

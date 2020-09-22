@@ -6,8 +6,9 @@
 @import './pages/favorites/favorites';
 
 @import './components/header/header';
-@import './components/forecast-card/forecast-card';
+@import './components/forecast-card/forecast-card.scss';
 @import './components/toggle-switch/toggle-switch';
 @import './components/daily-forecast/daily-forecast.scss';
 @import './components/search-input/search-input';
 @import './components/favorite-card/favorite-card.scss';
+@import './components/slide-menu/slide-menu.scss';

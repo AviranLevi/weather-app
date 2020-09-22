@@ -3,10 +3,11 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { useDispatch } from 'react-redux';
-import { getTodayWeather } from '../../stores/actions/weather';
+import { getTodayWeather, redirectToMain } from '../../stores/actions';
 import { searchCity } from '../../stores/actions';
 import { featureIcons } from '../../constant/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import { useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -26,12 +27,22 @@ const SearchInput = ({ className = '', style = {}, searchResults = [] }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [value, setValue] = useState('');
-
+  const location = useLocation();
   const renderResults = (
     <List className={classes.list}>
       {searchResults.map((city) => (
-        <ListItem button onClick={() => dispatch(getTodayWeather(city.Key, city.LocalizedName))}>
+        <ListItem
+          button
+          onClick={() => {
+            dispatch(getTodayWeather(city.Key, city.LocalizedName));
+            setValue('');
+            if (location.pathname === '/my-besties') {
+              dispatch(redirectToMain(true));
+            }
+          }}
+        >
           <ListItemText primary={city.LocalizedName} />
+          <ListItemText primary={city.Country.LocalizedName} />
         </ListItem>
       ))}
     </List>

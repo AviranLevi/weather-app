@@ -3,7 +3,7 @@
 
   .daily-forecast-wrapper {
     width: 100%;
-    height: 40%;
+    height: 60%;
     display: grid;
   }
 
@@ -39,6 +39,14 @@
       width: fit-content;
       display: flex;
       font-size: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .daily-forecast-card {
+    .daily-forecast-wrapper {
+      height: 60%;
     }
   }
 }

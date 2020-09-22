@@ -14,7 +14,7 @@ const api = axios.create({
   baseURL: url,
 });
 
-const FavoriteCard = ({ title = '', className = '', style = {}, convertTempUnit = false, index = 0, locationKey }) => {
+const FavoriteCard = ({ title = '', className = '', style = {}, convertTempUnits = false, index = 0, locationKey }) => {
   const [cityWeather, setCityWeather] = useState({});
 
   useEffect(() => {
@@ -33,8 +33,8 @@ const FavoriteCard = ({ title = '', className = '', style = {}, convertTempUnit 
       <Grow in={true} timeout={index * 1000}>
         <div className={`favorite-card center-items ${className}`} style={style}>
           <Title className='favorite-card-title bold-text' text={title} />
-          {convertTempUnit ? (
-            <div className='current-temp'>
+          {convertTempUnits ? (
+            <div className='favorites-current-temp'>
               {cityWeather.Temperature.Imperial.Value} <span>&#8457;</span>
             </div>
           ) : (

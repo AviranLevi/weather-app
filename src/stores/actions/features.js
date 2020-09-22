@@ -12,6 +12,12 @@ export const enableDarkMode = (bool) => ({ type: actionType.DARK_MODE, payload: 
 
 export const toggleLoading = (bool) => ({ type: actionType.IS_LOADING, payload: bool });
 
+export const switchUnits = (bool) => ({ type: actionType.CONVERT_TEMP_UNITS, payload: bool });
+
+export const redirectToMain = (bool) => ({ type: actionType.REDIRECT, payload: bool });
+
+export const toggleSlideMenu = (bool) => ({ type: actionType.SLIDE_MENU, payload: bool });
+
 export const searchCity = (value) => (dispatch) => {
   const params = { q: value, apikey };
   api

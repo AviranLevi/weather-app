@@ -1,9 +1,9 @@
 import React from 'react';
 
-const ToggleSwitch = ({ onChange, checked = false }) => (
+const ToggleSwitch = ({ onChange, checked = false, htmlFor = '' }) => (
   <div className='switch'>
-    <input onChange={onChange} type='checkbox' id='switch' checked={checked} />
-    <label htmlFor='switch'></label>
+    <input onChange={onChange} type='checkbox' id={htmlFor} checked={checked} />
+    <label htmlFor={htmlFor}></label>
   </div>
 );
 

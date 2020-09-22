@@ -1,18 +1,22 @@
 .header {
-  width: 100%;
+  width: 95%;
   height: 100%;
-  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   font-size: 30px;
 
   .routes {
     width: 100%;
-    grid-template-columns: repeat(2, 1fr);
 
-    a {
-      opacity: 1;
-      transition: 0.5s;
-      &:hover {
-        opacity: 0.5;
+    .routes-wrapper {
+      width: 100%;
+      grid-template-columns: repeat(2, 1fr);
+
+      a {
+        opacity: 1;
+        transition: 0.5s;
+        &:hover {
+          opacity: 0.5;
+        }
       }
     }
   }
@@ -20,5 +24,38 @@
   .dark-mode-switch {
     grid-template-columns: repeat(2, 1fr);
     font-size: 18px;
+  }
+
+  .switch-units {
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .header {
+    font-size: 25px;
+    width: 100%;
+
+    .dark-mode-switch {
+      font-size: 16px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .header {
+    grid-template-columns: unset;
+    .routes-wrapper {
+      display: none;
+    }
+
+    .switch-units {
+      display: none;
+    }
+
+    .dark-mode-switch {
+      display: none;
+    }
   }
 }

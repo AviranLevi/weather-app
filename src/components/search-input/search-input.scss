@@ -9,7 +9,7 @@
       padding: 15px;
       background: none;
       border: none;
-      width: 235px;
+      width: calc(100% - 65px);
       font-size: 15px;
       outline: none;
       color: $font-color;
@@ -22,6 +22,15 @@
 
     i {
       font-size: 20px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .search {
+    width: 40%;
+    .search-input {
+      width: 100%;
     }
   }
 }
